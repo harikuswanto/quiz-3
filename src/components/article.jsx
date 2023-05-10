@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link";
 
 function rangkaiNama({firstName, middleName,lastName}){
     let name = firstName;
@@ -7,8 +8,8 @@ function rangkaiNama({firstName, middleName,lastName}){
     return  name
 }
 
-export default function Article({post}) {
-    const {author,category,thumbnail,title} = post;
+export default function Article(props) {
+    const {author,category,thumbnail,title,slug} = props;
     return (
         <article>
             <Image
@@ -23,7 +24,10 @@ export default function Article({post}) {
             <span className="value">{rangkaiNama(author)} </span>
             <span className="label">IN </span>
             <span className="value">{category.name}</span>
-            <h2>{title}</h2>
+            <h2>
+                <Link href={slug}>{title}</Link>
+            </h2>
+            
         </article>
     )
 }

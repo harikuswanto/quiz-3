@@ -1,10 +1,10 @@
 import Logo from "@/components/logo"
 import Sorter from "@/components/sorter"
 
-export default function Header() {
+export default function Header({sort}) {
   return (
     <header>
-      <Sorter /> 
+      <Sorter sort ={sort} /> 
       <Logo />
     </header>
   )

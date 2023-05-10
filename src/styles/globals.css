@@ -15,21 +15,29 @@ header{
 }
 
 header > nav{
-  display: flex;
   position: absolute;
   left: 0;
 }
 
-header > nav > a{
+header > nav > ul{
+  display: flex;
+}
+
+header > nav > ul>li{
   display: block;
-  text-decoration: none;
   padding: 7px 20px;
-  background: #FF5480;
   border-radius: 10px;
   margin: 0 20px;
+  color: black;
   font-weight: 600;
   font-size: 16px;
+  cursor: pointer;
 }
+
+.active{
+  background: #FF5480;
+  color: white;
+ }
 
 /* Style untuk logo */
 header > img{
@@ -56,13 +64,15 @@ article{
   text-transform: uppercase;
 }
 
-h2{
+h2>a{
+  text-decoration: none;
   font-weight: 600;
   font-size: 48px;
   line-height: 61px;
   letter-spacing: -0.3px;
   color: #111210;
 }
+
 
 button{
   display: block;
