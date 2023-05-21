@@ -4,7 +4,7 @@ import Image from "next/image"
 import { useState } from "react";
 
 
-export default function related({currentPost,relatedPosts,meta}) {
+export default function Related({currentPost,relatedPosts,meta}) {
     const [posts,setPosts] = useState(relatedPosts);
     const categoryId=currentPost.category.id;
     let page = Math.ceil(posts.length/meta.pagination.perPage);
