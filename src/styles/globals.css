@@ -21,7 +21,7 @@ header{
   max-width: 100%;
 }
 
-.next-error-h1, a, img, div, span, h2, h3, p{
+.next-error-h1, a, img, div, span, h2, h3, h4, p{
   background-color: inherit;
 }
 
@@ -241,3 +241,64 @@ h3>a{
   color: #000000;
 }
 
+
+.card-full{
+  display: flex;
+  margin: 40px 0;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.0835598);
+  border-radius: 8px;
+}
+
+.post-order{
+  line-height: 38px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.15px;
+  color: #000000;
+}
+
+.post-summary{
+  margin: 40px;
+  width: 460px;
+}
+
+.post-summary>h4{
+  font-weight: 600;
+  font-size: 28px;
+  letter-spacing: -0.175px;
+  color: #111210;
+}
+
+h4>a{
+  color: #111210;
+  text-decoration: none;
+}
+
+.post-summary>p{
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 32px;
+  letter-spacing: -0.1px;
+  color: #9B9B9B;
+}
+
+.related-post-lists{
+  list-style: none;
+  padding: 0;
+}
+
+.related-post-thumbnail{
+  position: relative;
+  width: 500px;
+  height: 320px;
+}
+
+.related-post-thumbnail>img{
+  border-radius: 0px 8px 8px 0px;
+}
+
+main>#loadMore{
+  margin: 20px auto;
+}

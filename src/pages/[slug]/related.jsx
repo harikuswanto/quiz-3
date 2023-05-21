@@ -1,9 +1,27 @@
+import CardFull from "@/components/cardFull";
 import Header from "@/components/headerSingle";
-import PostMeta from "@/components/postMeta";
 import Image from "next/image"
+import { useState } from "react";
 
 
 export default function related({currentPost,relatedPosts,meta}) {
+    const [posts,setPosts] = useState(relatedPosts);
+    const categoryId=currentPost.category.id;
+    let page = Math.ceil(posts.length/meta.pagination.perPage);
+    const total = meta.pagination.totalPages;
+
+    async function loadMore(){
+        page++
+        const loadButton = document.getElementById('loadMore');
+        loadButton.innerHTML='Loading...';
+        let urlString = '&categoryId='+categoryId;
+        urlString += '&excludedArticleId='+currentPost.id;
+        const res = await fetch(`https://hsi-sandbox.vercel.app/api/articles?page=${page}${urlString}`);
+        const {data} = await res.json();
+        setPosts([...posts,...data]);
+        loadButton.innerHTML='Load More';
+    }
+
     return (
         <>
             <Header>
@@ -32,16 +50,23 @@ export default function related({currentPost,relatedPosts,meta}) {
             </Header>
             <main>
                 <div className="container">
-                    <ol>
-                        {relatedPosts.map(post=>
+                    <ul className="related-post-lists">
+                        {posts.map((post,index)=>
                             <li key={post.id}>
-                                <div>{post.title}</div>
-                                <div>{post.summary}</div>
+                                <CardFull
+                                    order={index<9?"0"+(index+1):index+1}
+                                    title={post.title}
+                                    summary={post.summary}
+                                    thumbnail={post.thumbnail}
+                                    slug={post.slug}
+                                />
                             </li>
                         )}
-                    </ol>
+                    </ul>
                 </div>
+                {page<total&&<button id='loadMore' onClick={loadMore} >Load More</button>}
             </main>
+            <footer></footer>
         </>
     )
 }
@@ -58,7 +83,8 @@ export async function getServerSideProps(context){
     const currentPost = postData.find(post=>post.slug===slug);
     if(!currentPost){return {notFound:true}};
     const categoryId = currentPost.category.id;
-    const relatedPosts = postData.filter(post=>post.category.id===categoryId);
+    let relatedPosts = postData.filter(post=>post.category.id===categoryId);
+    relatedPosts = relatedPosts.filter(post=>post.id!==currentPost.id)
     const perPage = 4;
     const totalPages = Math.ceil(relatedPosts.length/perPage);
     const meta = {
