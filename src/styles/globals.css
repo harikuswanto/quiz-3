@@ -260,13 +260,13 @@ h3>a{
 }
 
 .post-summary{
-  margin: 40px;
-  width: 460px;
+  margin: 30px;
+  width: 410px;
 }
 
 .post-summary>h4{
   font-weight: 600;
-  font-size: 28px;
+  font-size: 24px;
   letter-spacing: -0.175px;
   color: #111210;
 }
