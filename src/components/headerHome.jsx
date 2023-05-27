@@ -1,11 +1,11 @@
 import Logo from "@/components/logo"
 import Sorter from "@/components/sorter"
 
-export default function HeaderHome({sort}) {
+export default function HeaderHome({setPosts}) {
   return (
     <header className="home">
       <Logo />
-      {sort&&<Sorter sort={sort} />} 
+      <Sorter setPosts={setPosts} />
     </header>
   )
 }

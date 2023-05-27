@@ -2,24 +2,25 @@ import CardFull from "@/components/cardFull";
 import Header from "@/components/headerSingle";
 import Image from "next/image"
 import { useState } from "react";
+import { linkApi } from "..";
 
 
 export default function Related({currentPost,relatedPosts,meta}) {
     const [posts,setPosts] = useState(relatedPosts);
+    const [moreLabel,setMoreLabel]= useState("Load More")
     const categoryId=currentPost.category.id;
     let page = Math.ceil(posts.length/meta.pagination.perPage);
     const total = meta.pagination.totalPages;
 
     async function loadMore(){
         page++
-        const loadButton = document.getElementById('loadMore');
-        loadButton.innerHTML='Loading...';
+        setMoreLabel('Loading...');
         let urlString = '&categoryId='+categoryId;
         urlString += '&excludedArticleId='+currentPost.id;
-        const res = await fetch(`https://hsi-sandbox.vercel.app/api/articles?page=${page}${urlString}`);
+        const res = await fetch(`${linkApi}/articles?page=${page}${urlString}`);
         const {data} = await res.json();
         setPosts([...posts,...data]);
-        loadButton.innerHTML='Load More';
+        setMoreLabel('Load More');
     }
 
     return (
@@ -64,7 +65,7 @@ export default function Related({currentPost,relatedPosts,meta}) {
                         )}
                     </ul>
                 </div>
-                {page<total&&<button id='loadMore' onClick={loadMore} >Load More</button>}
+                {page<total&&<button id='loadMore' onClick={loadMore} >{moreLabel}</button>}
             </main>
             <footer></footer>
         </>
@@ -77,7 +78,7 @@ export async function getServerSideProps(context){
     const {query} = context;
     const {slug} = query;
     let queryString = 'perPage=1000';
-    const res = await fetch('https://hsi-sandbox.vercel.app/api/articles?'+queryString);
+    const res = await fetch(linkApi+'/articles?'+queryString);
     const data = await res.json();
     const postData = data.data;
     const currentPost = postData.find(post=>post.slug===slug);

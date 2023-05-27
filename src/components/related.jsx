@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import CardHalf from "./cardHalf";
 import Link from "next/link";
+import { linkApi } from "@/pages";
 
 async function fetcher(endpoint){
     const res = await fetch(endpoint);
@@ -12,7 +13,7 @@ async function fetcher(endpoint){
 export default function Related({category,slug,articleId}) {
     let queryString = '?excludedArticleId='+articleId;
     queryString += '&categoryId='+category.id;
-    const { data, error, isLoading } = useSWR('https://hsi-sandbox.vercel.app/api/articles'+queryString,fetcher);
+    const { data, error, isLoading } = useSWR(linkApi+'/articles'+queryString,fetcher);
     return (
         <>
         <div className="related-post-title">

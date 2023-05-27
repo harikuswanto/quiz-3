@@ -2,6 +2,7 @@ import Header from "@/components/headerSingle";
 import Image from "next/image"
 import PostMeta from "@/components/postMeta";
 import Related from "@/components/related";
+import { linkApi } from "..";
 
 export default function Slug({post}) {
     const {title,category,author,thumbnail,summary,content,slug,id} = post;
@@ -43,7 +44,7 @@ export default function Slug({post}) {
 }
 
 export async function getStaticPaths(){
-    const res = await fetch('https://hsi-sandbox.vercel.app/api/articles?perPage=100');
+    const res = await fetch(linkApi+'/articles?perPage=100');
     const {data} = await res.json();
     const paths = data.map(post=>{
         return{params: {slug: post.slug}}
@@ -58,7 +59,7 @@ export async function getStaticPaths(){
 export async function getStaticProps(context){
     const {params} = context;
     const {slug} = params;
-    const res = await fetch('https://hsi-sandbox.vercel.app/api/articles/'+slug);
+    const res = await fetch(linkApi+'/articles/'+slug);
     const {data} = await res.json();
     return {
         props: {
